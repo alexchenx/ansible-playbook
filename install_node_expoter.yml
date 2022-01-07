@@ -1,0 +1,16 @@
+---
+# Install node_exporter
+
+- hosts: bj
+  gather_facts: no
+
+  vars:
+  - node_exporter_url: https://qooco-software.oss-cn-beijing.aliyuncs.com/prometheus/node_exporter-1.3.1.linux-amd64.tar.gz
+
+  tasks:
+  - name: download node_exporter
+    get_url: url={{ node_exporter_url }} dest=/tmp/
+  - name: unarchive
+    unarchive: src=/tmp/node_exporter-1.3.1.linux-amd64.tar.gz dest=/data/app/
+  - name: start node_expoter
+    shell: chdir=/data/app/node_exporter-1.3.1.linux-amd64 nohup ./node_exporter &
